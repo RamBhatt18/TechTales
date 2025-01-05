@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import NextAuthProvider from "@/providers/next-auth-provider";
+import NextThemeProvider from "@/providers/theme-provider";
+import GlobalState from "@/context";
+import Header from "@/components/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,10 +28,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className="dark:bg-black">
+        <NextThemeProvider>
+          <NextAuthProvider>
+            <Header/>
+            <GlobalState>{children}</GlobalState>
+          </NextAuthProvider>
+        </NextThemeProvider>
       </body>
     </html>
   );
